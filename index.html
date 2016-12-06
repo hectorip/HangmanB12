@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hangaman</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+</head>
+<body>
+  <h1> Hangman </h1>
+
+  <div id="espacios_palabra"></div>
+  <div id="errores"></div>
+
+  <button onclick="jugar()"> Jugar</button>
+  <button onclick="reemplazar('a')"> Reemplazar A's</button>
+
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.js"
+  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+  crossorigin="anonymous"></script>
+
+  <script>
+    function jugar(){
+      var palabra = "aguacate";
+      var hidden_word = "";
+      var contenedor = $("#espacios_palabra");
+
+      for(var i=0; i < palabra.length; i++){
+        contenedor.append("<span class='" + palabra[i] + "'> * </span>");
+      }
+
+    }
+
+    function reemplazar(letra){
+      $("." + letra).html(letra);
+    }
+    $(function(){
+      // Event Listeners
+    });
+
+
+  </script>
+</body>
+</html>
