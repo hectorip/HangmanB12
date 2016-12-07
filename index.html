@@ -9,9 +9,11 @@
   <h1> Hangman </h1>
 
   <div id="espacios_palabra"></div>
+  Tu letra: <input type="text" id="letra">
   <div id="errores"></div>
 
-  <button onclick="jugar()"> Jugar</button>
+  <button onclick="jugar()"> Jugar con letra</button>
+  <button onclick="dibujar_palabra()"> Otra Palabra</button>
   <button onclick="reemplazar('a')"> Reemplazar A's</button>
 
   <script
@@ -20,22 +22,47 @@
   crossorigin="anonymous"></script>
 
   <script>
+
+    var palabra;
+    var intentos = 7;
+    function dibujar_palabra(){
+      var url = "http://devf-palabras-api.appspot.com/random";
+      $.getJSON(url, {}, function(data){
+        palabra = data.palabra;
+        var contenedor = $("#espacios_palabra");
+        for(var i=0; i < palabra.length; i++){
+          contenedor.append("<span class='" + palabra[i] + "'> * </span>");
+        }
+      });
+      // return palabra;
+    }
+
     function jugar(){
-      var palabra = "aguacate";
-      var hidden_word = "";
-      var contenedor = $("#espacios_palabra");
-
-      for(var i=0; i < palabra.length; i++){
-        contenedor.append("<span class='" + palabra[i] + "'> * </span>");
+      if(intentos > 0){
+        var letra = $('#letra').val();
+        console.log(palabra);
+        var index = palabra.indexOf(letra);
+        if(index != -1){
+          reemplazar(letra);
+        } else {
+          intentos = intentos - 1;
+          // intentos -= 1;
+          // intentos--;
+          $("#errores").append(" X ");
+          // alert("No está");
+        }
+      } else {
+        $("#errores").html("Ya no puedes jugar, perdiste;");
       }
-
     }
 
     function reemplazar(letra){
       $("." + letra).html(letra);
     }
+
     $(function(){
-      // Event Listeners
+
+      dibujar_palabra();
     });
 
 
